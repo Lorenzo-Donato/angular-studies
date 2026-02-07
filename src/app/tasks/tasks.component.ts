@@ -3,7 +3,7 @@ import { TaskComponent } from "./task/task.component";
 
 import { NewTaskComponent } from './new-task/new-task.component';
 
-import { Task } from './task/task.model';
+import { NewTaskData } from './task/task.model';
 
 @Component({
   selector: 'app-tasks',
@@ -50,8 +50,22 @@ export class TasksComponent {
     this.tasks = this.tasks.filter((task) => task.id !== id);
   }
 
-  onCreateTask(task: Task) {
-    this.tasks.push(task);
+  onStartAddTask() {
+    this.isAddingTask = true;
+  }
+
+  onCancelAddTask() {
+    this.isAddingTask = false;
+  }
+
+  onAddTask(taskData: NewTaskData) {
+    this.tasks.unshift({
+      id: new Date().getTime().toString(),
+      userId: this.userId,
+      title: taskData.title,
+      summary: taskData.summary,
+      dueDate: taskData.date
+    });
     this.isAddingTask = false;
   }
 }

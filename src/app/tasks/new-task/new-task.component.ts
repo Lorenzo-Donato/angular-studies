@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Task } from '../task/task.model';
+import { NewTaskData } from '../task/task.model';
 
 
 @Component({
@@ -10,28 +10,28 @@ import { Task } from '../task/task.model';
   templateUrl: './new-task.component.html',
   styleUrl: './new-task.component.css'
 })
-export class NewTaskComponent {
-  @Input({ required: true }) userId!: string;
-  
-  @Output() create  = new EventEmitter<Task>();
+export class NewTaskComponent {  
+  @Output() add  = new EventEmitter<NewTaskData>();
+  @Output() cancel = new EventEmitter<void>();
 
-  title = '';
-  summary = '';
-  dueDate = '';
+  enteredTitle = '';
+  enteredSummary = '';
+  enteredDate = '';
+
+  onCancel() {
+    this.cancel.emit();
+  }
 
   onSubmit() {
-    const newTask: Task = {
-      id: Math.random().toString(),
-      userId: this.userId,
-      title: this.title,
-      summary: this.summary,
-      dueDate: this.dueDate
-    };
 
-    this.create.emit(newTask);
+    this.add.emit({
+      title: this.enteredTitle,
+      summary: this.enteredSummary,
+      date: this.enteredDate
+    });
 
-    this.title = '';
-    this.summary = '';
-    this.dueDate = '';
+    this.enteredTitle = '';
+    this.enteredSummary = '';
+    this.enteredDate = '';
   }
 }
