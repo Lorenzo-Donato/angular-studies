@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { type Task } from './task.model';
 import { CardComponent } from '../../shared/card/card.component';
@@ -9,7 +9,7 @@ import { TasksService } from '../tasks.service';
 @Component({
   selector: 'app-task',
   standalone: true,
-  imports: [CardComponent, DatePipe],
+  imports: [CardComponent, DatePipe, CommonModule],
   templateUrl: './task.component.html',
   styleUrl: './task.component.css'
 })
@@ -20,6 +20,4 @@ export class TaskComponent {
   onCompleteTask() {
     this.tasksService.removeTask(this.task.id)
   }
-
-
 }
